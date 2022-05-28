@@ -23,6 +23,7 @@ var (
 	Score = 0
 	ScoreText = ""
 	win = false
+	tutorial = true
 )
 
 
@@ -42,16 +43,18 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 
 
 // update function
-func (g *Game) Update() error {	
-	// if the mouse just pressed add score to the Score variable
-	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
-		Score = Score + 1
-		ScoreText = strconv.Itoa(Score)
-		fmt.Println(ScoreText)
-	}
+func (g *Game) Update() error {
+	if tutorial == false {	
+		// if the mouse just pressed add score to the Score variable
+		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+			Score = Score + 1
+			ScoreText = strconv.Itoa(Score)
+			fmt.Println(ScoreText)
+		}
 
-	if Score >= 100 {
-		win = true
+		if Score >= 100 {
+			win = true
+		}
 	}
 	return nil
 }
@@ -59,23 +62,33 @@ func (g *Game) Update() error {
 
 // draw function for the text and the Ebitengin logo
 func (g *Game) Draw(screen *ebiten.Image) {
-	if win != true{
-		// printing the Score to the screen
-		ebitenutil.DebugPrint(screen, ScoreText)
+	if tutorial == true {
+		ebitenutil.DebugPrint(screen, "Click The Screen To Add Score (Also click now)")
 	}
 
-	// creating the logo 
-	logo, _, err := ebitenutil.NewImageFromFile("logo.png")
-	if err != nil {
-		log.Fatal(err)
-	}
-	op := &ebiten.DrawImageOptions{}
+	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) && tutorial == true {
+			tutorial = false
+		}
 
-	// drawing the logo
-	screen.DrawImage(logo, op)
+	if tutorial == false {
+		if win != true{
+			// printing the Score to the screen
+			ebitenutil.DebugPrint(screen, ScoreText)
+		}
 
-	if win == true {
-		ebitenutil.DebugPrint(screen, "You Win!!")
+		// creating the logo 
+		logo, _, err := ebitenutil.NewImageFromFile("logo.png")
+		if err != nil {
+			log.Fatal(err)
+		}
+		op := &ebiten.DrawImageOptions{}
+
+		// drawing the logo
+		screen.DrawImage(logo, op)
+
+		if win == true {
+			ebitenutil.DebugPrint(screen, "You Win!!")
+		}
 	}
 }
 
