@@ -7,7 +7,10 @@ github.com/hajimehoshi/ebiten
 
 # Rescorces
 
-https://golangprojectstructure.com/creating-cool-games-with-ebiten-in-go/
+https://golangprojectstructure.com/creating-cool-games-with-ebiten-in-go/ 
+
 https://www.fatoldyeti.com/categories/roguelike-tutorial/
+
 https://www.joshdeprez.com/77
+
 https://medium.com/@chrisandrews_76960/2d-game-development-in-golang-part-1-5e2c11a513ed (For v1. A little outdated)
